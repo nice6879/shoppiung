@@ -1,0 +1,478 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <!--==============================
+        Header Area
+    ==============================-->
+
+    <style>
+        .menu-style2 > ul > li > a {
+            padding: 0;
+        }
+
+        .menu-area {
+            padding: 20px;
+        }
+    </style>
+    <header class="header-wrapper header-layout5">
+        
+        <div class="menu-area" >
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col col-lg-auto">
+                        <div class="header-logo">
+                            <a href="index.html"><img src="{% static 'assets/img/logo.svg' %}" alt="Foodano"></a>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <nav class="main-menu mobile-menu-active menu-style2">
+                            <ul>
+                                
+                                <li class="menu-item-has-children">
+                                    <a href="shop.html">Shop</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="{% url 'login' %}">Login & Register</a></li>
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children">
+                                    <a href="blog.html">Blog</a>
+                                    <ul class="sub-menu">
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="contact.html">Contact Us</a>
+                                </li>
+
+                                <li class="mega-menu-wrap menu-item-has-children">
+                                    <a href="#">All</a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="col-auto d-none d-sm-block">
+                        <div class="header-buttons">
+                            <button type="button" class="searchBoxTggler"><i class="far fa-search"></i></button>
+                            <a href="{% url 'wishList' %}"><i class="fal fa-heart"></i></a>
+                            <a href="{% url 'mycart' %}"><i class="fal fa-shopping-cart"></i><span class="badge">1</span></a>
+                            {% if request.user.is_authenticated%}
+                            <a href="#">{{request.user.username}}</a>
+                            {% endif %}
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="col-auto d-block d-lg-none">
+                        <button type="button" class="vs-menu-toggle "><i class="far fa-bars"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--==============================
+      Hero Area
+    ==============================-->
+    <div class="  ">
+        
+        <div class="vs-hero-carousel hero-layout6" data-globalbgimage="{% static 'assets/img/nature.jpg' %}" data-height="810" data-container="1900" data-slidertype="responsive">
+
+            {% for banner in  banners %}
+            <div class="ls-slide" data-ls="duration:12000; transition2d:5; kenburnsscale:1.2;">
+                <p style="top:405px; left:375px; font-weight:700; background-size:inherit; background-position:inherit; font-size:65px; color:#fcd55c; font-family:'Advent Pro', sans-serif;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetxin:-200; durationin:1500; easingin:easeOutQuint;">{{banner.title}} <br> {{banner.sub_title}}</p>
+                <div style="top:611px; left:375px; background-size:inherit; background-position:inherit;" class="ls-l ls-hide-tablet ls-hide-phone" data-ls="offsetyin:100; durationin:1500; delayin:800; easingin:easeOutQuint; offsetyout:200; durationout:1500; easingout:easeOutQuint;">
+
+                    <a href="shop.html" class="vs-btn style5 ls-btn">Start Shopping<i class="far fa-angle-right"></i></a>
+                </div>
+
+                <img width="658" height="543" src="{{ banner.img.url }}" class="ls-l ls-hide-deskto" alt="image" style="top: 180px; left:916px; background-size:inherit; background-position:inherit; width:800px; height:600px;">
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    <!--==============================
+    Categories Area
+    ==============================-->
+    <section class="space-top" style="padding-top: 30px;">
+        <div class="container">
+            <span class="sub-title4" style="    font-size: 60px; font-weight: 700; line-height: 1.1;">Categories</span>
+            <div class="row vs-carousel" data-slide-show="3" id="catboxSlide4645">
+                {% for category in categories %}
+                <div class="col-xl-4">
+                    <div class="cat-box">
+                        <div class="cat-box__img">
+                            <img src="{{category.img.url}}" alt="Category image" style="height: 300px; width: 400px;">
+                        </div>
+                        <h3 class="cat-box__title"><a href="shop.html">{{category.name}}</a></h3>
+                        <p class="cat-box__text">{{category.title}}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row text-center justify-content-around align-items-center">
+                <div class="col-auto d-none d-sm-block">
+                    <button class="slick-arrow" data-slick-prev="#catboxSlide4645" type="button"><i class="fas fa-angle-left"></i></button>
+                </div>
+                <div class="col-auto">
+                    <a href="shop.html" class="vs-btn style3">Start Shopping<i class="fas fa-angle-right"></i></a>
+                </div>
+                <div class="col-auto d-none d-sm-block">
+                    <button class="slick-arrow" data-slick-next="#catboxSlide4645" type="button"><i class="fas fa-angle-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="sec-bg3 vs-shop-wrapper" style="padding-top: 30px;" data-bg-src="{% static 'assets/img/shape/bg-00778.png' %}">
+        <div class="section-title text-center" style="margin-bottom: 30px;">
+            <div class="sec-icon"><img src="{% static 'assets/img/icons/sec-icon-2.png' %}" alt="icon"></div>
+            <span class="sub-title4">Latest Arrivals</span>
+            <h2 class="sec-title3">Feature Products</h2>
+        </div>
+        <div class="container position-relative">
+          
+            <div class="vs-carousel" data-slide-show="1" data-lg-slide-show="1" data-md-slide-show="1" data-sm-slide-show="1" data-fade="true" id="shopSlide8440">
+
+                <div id="BestSeller">
+                    <div class="row gx-2px justify-content-center">
+                        {% for product in page_obj %}
+                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                                <div class="vs-product-box3 ">
+                                    <div class="product-img">
+                                        <a href="shop-details.html"><img src="{{ product.img.url }}" alt="Product Image" class="w-100"></a>
+                                        {% if product.is_new %}
+                                            <span class="product-tag2">New</span>
+                                        {% endif %}
+                                        {% if product.is_on_sale %}
+                                            <span class="product-tag3">Sale</span>
+                                        {% endif %}
+                                    </div>
+                                    <div class="actions-btn">
+                                        <form action="{% url 'addToCart' product.id %}" method="POST">
+                                            {% csrf_token %}
+                                            <a href="{{ product.img.url }}" class="icon-btn popup-image"><i class="far fa-search"></i></a>
+                                            {% if product.product not in wishlist_products %}
+                                                <a href="{% url 'addOrDelete' product.id %}"  class="icon-btn "><i class="fal fa-heart"></i></a>
+                                            {% else %}
+                                                <a href="{% url 'addOrDelete' product.id %}" class="icon-btn" class="liked"><i class="fa-solid fa-heart" style="color: #f00505;"></i></a>
+                                            {% endif %}                                            
+                                        
+                                                <input type="number" class="form-control" placeholder="Quantity" name="quantity" hidden value="1">
+                                        
+                                            <button type="submit" class="vs-btn style4 cart-btn">
+                                                <i class="fal fa-cart-plus"></i>Add To Cart
+                                                
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="product-rating-box">5.0<div class="star-rating" role="img" aria-label="Rated 5.00 out of 5"><span style="width:100%">Rated <strong class="rating">5.00</strong> out of 5</span></div>
+                                        </div>
+                                        <h4 class="product-title"><a href="shop-details.html">{{ product.product.name }}</a></h4>
+                                        <span class="price"><strong>${{ product.product.price }}</strong>{% if product.product.original_price %}<del>${{ product.product.original_price }}</del>{% endif %}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">First</span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link">Previous</span>
+                                </li>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <span class="page-link">Next</span>
+                                </li>
+                                <li class="page-item disabled">
+                                    <span class="page-link">Last</span>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="bottom-btn">
+                <a href="shop.html" class="vs-btn style3">All Product<i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+    </section>
+    
+    <!--==============================
+    Popular Package Box
+    ==============================-->
+    <section class="position-relative space-top space-md-bottom" style="padding-top: 40px;">
+        <div class="sec-bg4" data-bg-src="assets/img/shape/bg-00779.png"></div>
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <div class="sec-icon"><img src="{% static 'assets/img/icons/sec-icon-2.png' %}" alt="icon"></div>
+                <span class="sub-title4">Box contents change weekly</span>
+                <h2 class="sec-title3">Our Most Popular Boxes</h2>
+            </div>
+            <div class="row vs-carousel" data-slide-show="3" data-lg-slide-show="3" data-sm-slide-show="1">
+                {% for product in products %}
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <img src="{{ product.img.url }}" class="card-img-top" alt="Package">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.product.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${{ product.product.price }}</h6>
+                            <p class="card-text">{{ product.product.description }}</p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="far fa-check"></i> {{ product.product.quantity }} pcs left</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <form action="{% url 'addToCart' product.id %}" method="POST">
+                                {% csrf_token %}
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="Quantity" name="quantity">
+                                    <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+
+
+    <section class="  space" data-bg-src="{% static 'imgs/ananas.jpg' %}">
+        <div class="container">
+            <div class="newsletter-style2" data-bg-src="{% static 'assets/img/shape/newsletter-bg-1-1.png' %}">
+                <div class="shape-1 d-none d-md-block"><img src="{% static 'assets/img/shape/newsletter-s-008.png' %}" alt="shape"></div>
+                <span class="sub-title4">Subscribe and Get new Tips and Updates</span>
+                <h2 class="sec-title3">Subscribe & Get 10% Off</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Enter Your Email Address....">
+                    <button class="vs-btn style4" type="submit"><i class="fas fa-envelope"></i>Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--==============================
+        Blog Area
+    ==============================-->
+    <section class="vs-blog-wrapper space-top space-md-bottom" style="padding: 40px;">
+        <div class="container">
+            <div class="section-title text-center">
+                <div class="sec-icon"><img src="{% static 'assets/img/icons/sec-icon-2.png' %}" alt="icon"></div>
+                <span class="sub-title4">Tips & News</span>
+                <h2 class="sec-title3">Recent Articles</h2>
+            </div>
+            <div class="row vs-carousel" data-slide-show="3" data-sm-slide-show="1">
+                <div class="col-xl-4">
+                    <div class="vs-blog blog-style1">
+                        <div class="blog-img image-scale-hover">
+                            <a href="blog-details.html"><img src="{% static 'assets/img/blog/blog-4-1.jpg' %}" alt="Blog Image" class="w-100"></a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="tags">
+                                <a href="blog-details.html">Apple</a>
+                            </div>
+                            <a href="blog-details.html" class="blog-date">August 22,2024</a>
+                            <h3 class="blog-title"><a href="blog-details.html">Enjoy with us</a></h3>
+                            <p class="blog-text">Apples are one of the most popular and widely consumed fruits globally. They belong to the Rosaceae family and come in various colors, including red, green, and yellow.</p>
+                        </div>
+                        <div class="meta-box">
+                            <a href="blog-details.html">Posted By Admin</a>
+                            <a href="blog-details.html">5 Comments</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="vs-blog blog-style1">
+                        <div class="blog-img image-scale-hover">
+                            <a href="blog-details.html"><img src="{% static 'assets/img/blog/blog-4-2.jpg' %}" alt="Blog Image" class="w-100"></a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="tags">
+                                <a href="blog-details.html">Popular</a>
+                            </div>
+                            <a href="blog-details.html" class="blog-date">Dec 18,2022</a>
+                            <h3 class="blog-title"><a href="blog-details.html">Latin derived from Cicero's 1st-century</a></h3>
+                            <p class="blog-text">Nvidunt ut labore et dolore magna aliqu accusam et justo duo dolores et ea rebu Lorem ipsum dolor sit ametrit.</p>
+                        </div>
+                        <div class="meta-box">
+                            <a href="blog-details.html">Posted By Ripon</a>
+                            <a href="blog-details.html">3 Comments</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="vs-blog blog-style1">
+                        <div class="blog-img image-scale-hover">
+                            <a href="blog-details.html"><img src="{% static 'assets/img/blog/blog-4-3.jpg' %}" alt="Blog Image" class="w-100"></a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="tags">
+                                <a href="blog-details.html">Fresh</a>
+                            </div>
+                            <a href="blog-details.html" class="blog-date">Jan 21,2022</a>
+                            <h3 class="blog-title"><a href="blog-details.html">Creation timelines for the standard lorem</a></h3>
+                            <p class="blog-text">Nvidunt ut labore et dolore magna aliqu accusam et justo duo dolores et ea rebu Lorem ipsum dolor sit ametrit.</p>
+                        </div>
+                        <div class="meta-box">
+                            <a href="blog-details.html">Posted By Admin</a>
+                            <a href="blog-details.html">9 Comments</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="vs-blog blog-style1">
+                        <div class="blog-img image-scale-hover">
+                            <a href="blog-details.html"><img src="{% static 'assets/img/blog/blog-4-4.jpg' %}" alt="Blog Image" class="w-100"></a>
+                        </div>
+                        <div class="blog-content">
+                            <div class="tags">
+                                <a href="blog-details.html">Natural</a>
+                            </div>
+                            <a href="blog-details.html" class="blog-date">Mar 1,2022</a>
+                            <h3 class="blog-title"><a href="blog-details.html">Lorem ipsum was purposefully designed</a></h3>
+                            <p class="blog-text">Nvidunt ut labore et dolore magna aliqu accusam et justo duo dolores et ea rebu Lorem ipsum dolor sit ametrit.</p>
+                        </div>
+                        <div class="meta-box">
+                            <a href="blog-details.html">Posted By Admin</a>
+                            <a href="blog-details.html">3 Comments</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--==============================
+        Blog Area
+    ==============================-->
+
+    <!--==============================
+    Banner Area
+    ==============================-->
+
+    <!--==============================
+			Footer Area
+	==============================-->
+    <footer class="footer-wrapper footer-layout2" data-bg-src="{% static 'assets/img/shape/footer-5-1.jpg' %}" style="padding-top: 10px;">
+        <div class="container">
+            <div class="widget-area" style="padding-top: 30px; padding-bottom: 30px;">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="widget  footer-widget">
+                            <div class="footer-info-widget">
+                                <div class="footer-info-logo">
+                                    <img src="{% static 'assets/img/logo-white.svg' %}" alt="Foodano">
+                                </div>
+                                <div class="footer-info">
+                                    <i class="fas fa-phone-alt"></i>
+                                    <a href="tel:+387643932728">{{ info.phone_number }}</a>
+                                </div>
+                                <div class="footer-info">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    {{ info.address }}
+                                </div>
+                                <div class="footer-info">
+                                    <i class="fas fa-envelope"></i>
+                                    <a href="mailto:info@foodano.com">{{ info.email }} </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="widget widget_nav_menu  footer-widget">
+                            <h3 class="widget_title">Useful Links</h3>
+                            <div class="menu-all-pages-container footer-links">
+                                <ul class="menu">
+                                    <li><a href="#">Farm & Family</a></li>
+                                    <li><a href="#">Our Butchery</a></li>
+                                    <li><a href="#">Farm Shops</a></li>
+                                    <li><a href="#">Dartmoor Inn</a></li>
+                                    <li><a href="#">Market Garden</a></li>
+                                    <li><a href="#">Farm & Family</a></li>
+                                    <li><a href="#">Our Butchery</a></li>
+                                    <li><a href="#">Farm Shops</a></li>
+                                    <li><a href="#">Dartmoor Inn</a></li>
+                                    <li><a href="#">Market Garden</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="widget footer-widget">
+                            <h3 class="widget_title">Instagram Photos</h3>
+                            <div class="sidebar-gallery">
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/ananas.jpg' %}"><img src="{% static 'imgs/ananas.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/strawbery.jpg' %}"><img src="{% static 'imgs/strawbery.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/strawbery.jpg' %}"><img src="{% static 'imgs/strawbery.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/strawbery.jpg' %}"><img src="{% static 'imgs/strawbery.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/ananas.jpg' %}"><img src="{% static 'imgs/ananas.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                                <div class="gallery-thumb">
+                                    <a class="popup-image" href="{% static 'imgs/ananas.jpg' %}"><img src="{% static 'imgs/ananas.jpg' %}" alt="Gallery Image" class="w-100"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area" data-bg-src="{% static 'assets/img/shape/footer-5-2.png' %}">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col-lg-auto text-center text-lg-start">
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                        <div class="copyright-social">
+                            <a href="https://www.facebook.com/FoodAnobd?locale=ru_RU"><i class="fab fa-facebook-f"></i>Facebook</a>
+                            <a href="#"><i class="fab fa-twitter"></i>Twitter</a>
+                            <a href="https://www.linkedin.com/feed/"><i class="fab fa-linkedin-in"></i>Linked In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
